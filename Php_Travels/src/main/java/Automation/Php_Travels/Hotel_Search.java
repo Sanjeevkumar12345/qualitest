@@ -1,118 +1,57 @@
 package Automation.Php_Travels;
 
+import java.io.IOException;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
+public class Hotel_Search extends Registration{
 
-public class Hotel_Search extends Regitration{
-	static By HotelsButton=By.xpath("//span[contains(text(),'Hotels')]");
- 
-	static By hotelfield=By.xpath("//span[contains(text(),'Search by Hotel or City Name')]");
-	
-	static By hotelname=By.xpath("//div[@id='s2id_location']//a[@class='select2-choice select2-default']");
-
-	static By cookies=By.xpath("//*[@id=\"cookyGotItBtn\"]");
-	static By hotelclick=By.xpath("//*[@id=\"select2-drop\"]/ul/li/ul/li/div/span");
-	static By checkin=By.xpath("//div[@id='dpd1']//input[@placeholder='Check in']");
-	//static By adult=By.xpath("//*[@id="htravellersInput"]");
+	static By HotelsButton=By.xpath("//a[@class='text-center hotels active']");
+	static By destination=By.xpath("//div[@id='s2id_autogen1']//a[@class='select2-choice']");
+	static By checkin=By.xpath("//input[@id='checkin']");
 	
 	public static void Search() throws Exception {
 		
 		//Hotel_Button
-		driver.findElement(HotelsButton).click();
-		Thread.sleep(2000);
-		driver.findElement(hotelfield).click();
-		
-		//Hotel_Search
-		driver.findElement(hotelname).sendKeys(prop.getProperty("hotelname"));
-		driver.findElement(hotelname).sendKeys(Keys.DOWN);	
-		Thread.sleep(2000);
-		driver.findElement(hotelclick).click();
-		Thread.sleep(2000);
+		 driver.findElement(HotelsButton).click();
+		 driver.findElement(destination).click();
+		 driver.findElement(destination).sendKeys("Delhi");
+		 driver.findElement(destination).sendKeys(Keys.DOWN);
+		 Thread.sleep(2000);
+		 driver.findElement(destination).sendKeys(Keys.ENTER);
+		 
+		//For Check_in
+			
 		driver.findElement(checkin).click();
-		
-		//Check_in
-		
-		while (true) {
-			 
-			String str = driver.findElement(By.xpath("//div[14]//div[1]//tr[1]//th[2]")).getText();
-			
-			if(str.equals(prop.getProperty("Checkin_Month")))
-			{
-				break;
-			}
-			else {
-			     //Next
-				driver.findElement(By.xpath("//div[14]//div[1]//tr[1]//th[3]")).click();
-			}
-		}
+		driver.findElement(By.xpath("//div[1]//nav[1]//div[2]")).click(); //Check_In_year
+		driver.findElement(By.xpath("//div[contains(text(),'Dec')]")).click();//Check_in_month
+		driver.findElement(By.xpath("//div[@class='datepicker--cell datepicker--cell-day'][contains(text(),'12')]")).click();//Check_in_date
+		driver.findElement(By.xpath("//div[@id='datepickers-container']//div[2]//div[1]//div[14]")).click();//check_out_date
+		driver.findElement(By.xpath("//div[contains(@class,'col o2')]//button[contains(@class,'btn btn-white bootstrap-touchspin-up')][contains(text(),'+')]")).click();//adults
+		driver.findElement(By.xpath("//div[contains(@class,'col 01')]//button[contains(@class,'btn btn-white bootstrap-touchspin-up')][contains(text(),'+')]")).click();//child
+		//search_button
+		driver.findElement(By.xpath("//div[contains(@class,'col-md-2 col-xs-12 o1')]//button[contains(@class,'btn btn-primary btn-block')][contains(text(),'Search')]")).click();
 	
-		//Select_Date
-		//driver.findElement(cookies).click();
-		Thread.sleep(2000);
-		driver.findElement(By.xpath("/html/body/div[14]/div[1]/table/tbody/tr[6]/td[3]")).click();
-		
-		//Check_out
-		
-		while (true) {
-			
-			String str1 = driver.findElement(By.xpath("/html/body/div[15]/div[1]/table/thead/tr[1]/th[2]")).getText();
-			
-			if(str1.equals(prop.getProperty("Checkout_Month"))) {
-				
-				break;
-			}
-			else {
-				//Next
-				driver.findElement(By.xpath("/html/body/div[15]/div[1]/table/thead/tr[1]/th[3]")).click();
-			}
-		}
-		
-		//Select_Date
-		//driver.findElement(cookies).click();
-		Thread.sleep(2000);
-		 driver.findElement(By.xpath("/html/body/div[15]/div[1]/table/tbody/tr[1]/td[6]")).click();
-		 
-		 //Adult_field
-		 Thread.sleep(2000); 
-		 driver.findElement(By.xpath("//input[@id='htravellersInput']")).click();
-		 driver.findElement(By.xpath("//input[@id='hadultInput']")).sendKeys(Keys.BACK_SPACE);
-		 driver.findElement(By.xpath("//input[@id='hadultInput']")).sendKeys(prop.getProperty("Adult"));
-		  
-		 
-		 //Search_button
-		 //driver.findElement(cookies).click();
-		 driver.findElement(By.xpath("//button[@class='btn btn-lg btn-block btn-primary pfb0 loader']")).click();
-		 
-		 
-		 
-		 //HOTEL_BOOKING
-		 
-		 //Hotel_Details
-		 
-		// driver.findElement(cookies).click();
-		 driver.findElement(By.xpath("//tr[2]//td[1]//div[3]//form[1]//button[1]")).click();
-		 
-		 //Hotels_Details_Page
-		 //Thread.sleep(3000);
-		 driver.findElement(cookies).click();
-		 driver.findElement(By.xpath("//div[@class='room-cards']//div[1]//div[1]//div[1]//div[1]//div[3]//form[1]//button[1]")).click();
-		 
+	     //For_Details_button
 	
+		 //driver.findElement(By.xpath("//li[1]//div[1]//div[1]//div[2]//div[1]//div[3]//div[1]//div[2]//form[1]//button[1]")).click();
 	
+	   //Book_now_button
 	
-	}
+	    //driver.findElement(By.xpath("//div[@id='detail-content-sticky-nav-02']//div[3]//div[1]//div[2]//div[1]//div[2]//form[1]//button[1]")).sendKeys(Keys.ENTER);
+	    } 
 	
-	
-	
-	
-	public static void main(String[] args) throws Exception {
+	/* public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		Launchbrowser();
 		
      Search();
 
-	}
+	} */
 }
 
